@@ -3,82 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025 交換學生旅遊誌 | Travel Journal</title>
+    <title>2025 交換學生旅遊誌 | @ikea_1214_</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Noto Serif TC', serif; background-color: #fcfaf8; }
-        .hero-bg {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1600&q=80');
-            background-size: cover; background-position: center;
+        body { font-family: 'Montserrat', 'Noto Serif TC', serif; background-color: #fdfcfb; color: #2d2d2d; }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center; height: 70vh;
         }
+        #map { height: 500px; width: 100%; border-radius: 15px; z-index: 1; }
+        .ig-gradient { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
     </style>
 </head>
 <body>
 
-    <header class="hero-bg h-[60vh] flex flex-col justify-center items-center text-white text-center">
-        <h1 class="text-4xl md:text-6xl font-bold tracking-tighter mb-4 uppercase">Trust me I will be back</h1>
-        <p class="text-lg opacity-80 uppercase tracking-[0.3em]">2025.02 — 2025.06 Hungary Exchange</p>
-    </header>
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center text-white mix-blend-difference">
+        <span class="font-bold tracking-widest">IKEA_1214</span>
+        <a href="https://www.instagram.com/ikea_1214_/" target="_blank" class="text-sm border-b border-white">Follow Instagram</a>
+    </nav>
 
-    <main class="max-w-5xl mx-auto px-6 py-16">
+    <section class="hero-section flex items-center justify-center text-white">
+        <div class="text-center px-4">
+            <h1 class="text-5xl md:text-8xl font-bold tracking-tighter mb-4">TRUST ME<br>I WILL BE BACK</h1>
+            <p class="uppercase tracking-[0.5em] text-sm opacity-80 font-light underline underline-offset-8">2025 European Footprints</p>
+        </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto px-6 py-20">
         
-        <section class="mb-20">
-            <h2 class="text-2xl font-bold mb-2 border-l-4 border-black pl-4">旅行數據報告</h2>
-            <p class="text-gray-500 mb-8 ml-5">將交換期間的各項指標視覺化</p>
-            <div id="travelChart" class="w-full h-[400px] rounded-lg shadow-lg bg-white p-4"></div>
-        </section>
-
-        <section class="grid md:grid-cols-2 gap-12">
-            <div>
-                <h3 class="text-xl font-bold mb-6 italic underline">足跡清單 Footprints</h3>
-                <div class="space-y-4 text-gray-700">
-                    <p><b>🇭🇺 匈牙利：</b> 布達佩斯、佩奇 (Base)</p>
-                    <p><b>🇳🇱 荷蘭：</b> 阿姆斯特丹 <span class="text-red-500 text-xs font-bold">❤ 最愛</span></p>
-                    <p><b>🇪🇸 西班牙：</b> 巴賽隆納、Ibiza <span class="text-orange-500 text-xs font-bold">✨ 特別</span></p>
-                    <p><b>🇧🇪 比利時：</b> 布魯塞爾 <span class="text-gray-400 text-xs font-bold">✕ 討厭</span></p>
-                    <p><b>🇨🇭 瑞士：</b> 蘇黎世、伯恩、因特拉肯、格林德瓦...</p>
-                    <p><b>❄️ 北歐：</b> 奧斯陸、卑爾根、特羅姆瑟、斯德哥爾摩、哥本哈根</p>
+        <section class="mb-24">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold italic">The Travel Map</h2>
+                    <p class="text-gray-500 uppercase tracking-widest text-xs mt-2">點擊地圖標籤查看造訪城市</p>
+                </div>
+                <div class="hidden md:block text-right">
+                    <span class="text-sm font-bold">19 Countries Visited</span>
                 </div>
             </div>
-            <div class="bg-stone-100 p-8 rounded-xl italic text-gray-600 border-t-4 border-stone-300">
-                "這五個月，我不只是在旅行，而是在重新定義我的世界觀。從南歐的海濱到北歐的極光，每一座城市都有它獨特的重量。"
+            <div id="map" class="shadow-2xl"></div>
+        </section>
+
+        <section class="mb-24 bg-stone-900 rounded-3xl p-8 md:p-16 text-white flex flex-col md:flex-row items-center justify-between overflow-hidden relative">
+            <div class="z-10 relative">
+                <h3 class="text-4xl font-bold mb-4 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500">
+                    Connect with Me
+                </h3>
+                <p class="text-gray-400 max-w-md mb-8 leading-relaxed">
+                    我在 Instagram 上分享了更多關於匈牙利交換、歐洲策展與日常攝影的動態。追蹤我的帳號，一起探索更多未竟之境。
+                </p>
+                <a href="https://www.instagram.com/ikea_1214_/" target="_blank" class="ig-gradient px-8 py-4 rounded-full font-bold inline-flex items-center gap-2 hover:scale-105 transition transform">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.332 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.668-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    @ikea_1214_
+                </a>
             </div>
+            <div class="mt-12 md:mt-0 opacity-20 hover:opacity-100 transition duration-500">
+                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=400&q=80" class="w-64 rotate-12 rounded-2xl shadow-2xl" alt="IG Preview">
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="text-xl font-bold mb-8 italic">Data Insight: Exchange Growth</h3>
+            <div id="growthChart" class="w-full h-[400px] bg-white p-6 rounded-2xl shadow-sm border border-stone-100"></div>
         </section>
 
     </main>
 
-    <footer class="bg-black text-white py-10 text-center text-sm tracking-widest uppercase opacity-80">
-        Design for 2025 Exchange Memories
+    <footer class="bg-black text-white py-20 text-center">
+        <p class="text-xs tracking-[0.5em] opacity-40 mb-4 font-light uppercase">Created by IKEA_1214 for 2025 Memory</p>
+        <p class="text-2xl font-bold italic">See you in the next city.</p>
     </footer>
 
     <script>
-        // 這裡直接套用你提供的數據
-        Highcharts.chart('travelChart', {
-            title: { text: '交換生活各項指標趨勢 (2025)', align: 'left' },
-            yAxis: { title: { text: '數值' } },
-            xAxis: { accessibility: { rangeDescription: 'Range: 2025-02 to 2025-06' } },
-            legend: { layout: 'vertical', align: 'right', verticalAlign: 'middle' },
+        // 初始化地圖 (設定歐洲中心點)
+        var map = L.map('map').setView([47.4979, 19.0402], 4);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 標記你造訪過的城市
+        var cities = [
+            { name: "Budapest (Base 🇭🇺)", coords: [47.4979, 19.0402], note: "我交換的起點" },
+            { name: "Barcelona (Love 🇪🇸)", coords: [41.3851, 2.1734], note: "來了兩次，依舊深愛" },
+            { name: "Amsterdam (Favorite 🇳🇱)", coords: [52.3676, 4.9041], note: "我最愛的城市 😍" },
+            { name: "Ibiza (Special 🇪🇸)", coords: [38.9067, 1.4206], note: "最特別的記憶 ✨" },
+            { name: "Tromsø (Aurora 🇳🇴)", coords: [69.6492, 18.9553], note: "北極圈的震撼" },
+            { name: "Prague (🇨🇿)", coords: [50.0755, 14.4378], note: "絕美的百塔之城" },
+            { name: "Brussels (🇧🇪)", coords: [50.8503, 4.3517], note: "雖然沒那麼喜歡，但還是造訪了兩次" }
+        ];
+
+        cities.forEach(function(city) {
+            L.marker(city.coords).addTo(map)
+                .bindPopup("<b>" + city.name + "</b><br>" + city.note);
+        });
+
+        // Highcharts 數據 (沿用之前數據)
+        Highcharts.chart('growthChart', {
+            chart: { backgroundColor: 'transparent', style: { fontFamily: 'Montserrat' } },
+            title: { text: null },
+            xAxis: { categories: ['Week 1', 'Week 4', 'Week 8', 'Week 12', 'Week 16'] },
+            yAxis: { title: { text: '成長指數' }, gridLineColor: '#f3f3f3' },
             series: [{
-                name: '旅行開銷 (Installation)',
-                data: [43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157, 161454, 154610, 168960, 171558]
+                name: '文化感官開發',
+                data: [43934, 81827, 142383, 161454, 171558],
+                color: '#2d2d2d'
             }, {
-                name: '文化體驗 (Manufacturing)',
-                data: [24916, 37941, 29742, 29851, 32490, 30282, 38121, 36885, 33726, 34243, 31050, 33099, 33473]
-            }, {
-                name: '社交活動 (Sales)',
-                data: [11744, 30000, 16005, 19771, 20185, 24377, 32147, 30912, 29243, 29213, 25663, 28978, 30618]
-            }, {
-                name: '學業投入 (Operations)',
-                data: [null, null, null, null, null, null, null, null, 11164, 11218, 10077, 12530, 16585]
+                name: '社交圈拓展',
+                data: [11744, 19771, 24377, 29213, 30618],
+                color: '#dc2743'
             }],
-            responsive: {
-                rules: [{
-                    condition: { maxWidth: 500 },
-                    chartOptions: { legend: { layout: 'horizontal', align: 'center', verticalAlign: 'bottom' } }
-                }]
-            }
+            responsive: { rules: [{ condition: { maxWidth: 500 }, chartOptions: { legend: { enabled: false } } }] }
         });
     </script>
 </body>
