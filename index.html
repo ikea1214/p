@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 交換學生旅遊誌 | Travel Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Serif TC', serif; background-color: #fcfaf8; }
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-bg h-[60vh] flex flex-col justify-center items-center text-white text-center">
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tighter mb-4 uppercase">Trust me I will be back</h1>
+        <p class="text-lg opacity-80 uppercase tracking-[0.3em]">2025.02 — 2025.06 Hungary Exchange</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-16">
+        
+        <section class="mb-20">
+            <h2 class="text-2xl font-bold mb-2 border-l-4 border-black pl-4">旅行數據報告</h2>
+            <p class="text-gray-500 mb-8 ml-5">將交換期間的各項指標視覺化</p>
+            <div id="travelChart" class="w-full h-[400px] rounded-lg shadow-lg bg-white p-4"></div>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-12">
+            <div>
+                <h3 class="text-xl font-bold mb-6 italic underline">足跡清單 Footprints</h3>
+                <div class="space-y-4 text-gray-700">
+                    <p><b>🇭🇺 匈牙利：</b> 布達佩斯、佩奇 (Base)</p>
+                    <p><b>🇳🇱 荷蘭：</b> 阿姆斯特丹 <span class="text-red-500 text-xs font-bold">❤ 最愛</span></p>
+                    <p><b>🇪🇸 西班牙：</b> 巴賽隆納、Ibiza <span class="text-orange-500 text-xs font-bold">✨ 特別</span></p>
+                    <p><b>🇧🇪 比利時：</b> 布魯塞爾 <span class="text-gray-400 text-xs font-bold">✕ 討厭</span></p>
+                    <p><b>🇨🇭 瑞士：</b> 蘇黎世、伯恩、因特拉肯、格林德瓦...</p>
+                    <p><b>❄️ 北歐：</b> 奧斯陸、卑爾根、特羅姆瑟、斯德哥爾摩、哥本哈根</p>
+                </div>
+            </div>
+            <div class="bg-stone-100 p-8 rounded-xl italic text-gray-600 border-t-4 border-stone-300">
+                "這五個月，我不只是在旅行，而是在重新定義我的世界觀。從南歐的海濱到北歐的極光，每一座城市都有它獨特的重量。"
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-black text-white py-10 text-center text-sm tracking-widest uppercase opacity-80">
+        Design for 2025 Exchange Memories
+    </footer>
+
+    <script>
+        // 這裡直接套用你提供的數據
+        Highcharts.chart('travelChart', {
+            title: { text: '交換生活各項指標趨勢 (2025)', align: 'left' },
+            yAxis: { title: { text: '數值' } },
+            xAxis: { accessibility: { rangeDescription: 'Range: 2025-02 to 2025-06' } },
+            legend: { layout: 'vertical', align: 'right', verticalAlign: 'middle' },
+            series: [{
+                name: '旅行開銷 (Installation)',
+                data: [43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157, 161454, 154610, 168960, 171558]
+            }, {
+                name: '文化體驗 (Manufacturing)',
+                data: [24916, 37941, 29742, 29851, 32490, 30282, 38121, 36885, 33726, 34243, 31050, 33099, 33473]
+            }, {
+                name: '社交活動 (Sales)',
+                data: [11744, 30000, 16005, 19771, 20185, 24377, 32147, 30912, 29243, 29213, 25663, 28978, 30618]
+            }, {
+                name: '學業投入 (Operations)',
+                data: [null, null, null, null, null, null, null, null, 11164, 11218, 10077, 12530, 16585]
+            }],
+            responsive: {
+                rules: [{
+                    condition: { maxWidth: 500 },
+                    chartOptions: { legend: { layout: 'horizontal', align: 'center', verticalAlign: 'bottom' } }
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
